@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 DATA = {
     'omlet': {
@@ -28,3 +29,22 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+
+
+def cook_help_view(request, the_dish):
+    servings = int(request.GET.get('servings', 1))
+    calc_ing = {}
+    for dish, ing in DATA.items():
+        if dish == the_dish:
+            for product, amount in ing.items():
+                calc_ing[product] = amount * servings
+    context = {
+        'recipe': calc_ing
+    }
+    return render(request, 'calculator/index.html', context)
+
+
+def greet_view(request):
+    return HttpResponse('Введите название блюда в адресную строку. Пример: /omlet/')
+
+
