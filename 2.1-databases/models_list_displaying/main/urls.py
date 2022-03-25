@@ -15,10 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from datetime import datetime
+from django.urls import register_converter
+from books.views import books_view, one_book
 
-from books.views import books_view
+
+class DateConverter:
+    regex = r'[0-9]{4}-[0-9]{2}-[0-9]{2}'
+
+    def to_python(self, value: str) -> datetime:
+        return datetime.strptime(value, '%Y-%m-%d')
+
+    def to_url(self, value):
+        return value
+
+
+register_converter(DateConverter, 'date')
+
 
 urlpatterns = [
-    path('', books_view, name='books'),
+    path('books/', books_view, name='books'),
     path('admin/', admin.site.urls),
+    path('books/<date:pub_date>', one_book, name='book')
 ]
