@@ -1,26 +1,30 @@
 # примеры API-запросов
 
-@baseUrl = http://localhost:8000/api
+# получение датчика
+GET http://localhost:8000/api/sensor/1/
+Content-Type: application/json
+
+###
 
 # получение датчиков
-GET {{baseUrl}}/sensors/
+GET http://localhost:8000/api/sensors/
 Content-Type: application/json
 
 ###
 
 # создание датчика
-POST {{baseUrl}}/sensors/
+POST http://localhost:8000/api/new_sensor/
 Content-Type: application/json
 
 {
-  "name": "ESP32",
-  "description": "Датчик на кухне за холодильником"
+  "name": "1C",
+  "description": "bathroom"
 }
 
 ###
 
 # обновление датчика
-PATCH {{baseUrl}}/sensors/1/
+PATCH http://localhost:8000/api/update_sensor/3/
 Content-Type: application/json
 
 {
@@ -30,16 +34,22 @@ Content-Type: application/json
 ###
 
 # добавление измерения
-POST {{baseUrl}}/measurements/
+POST http://localhost:8000/api/measurements/
 Content-Type: application/json
 
 {
-  "sensor": 1,
-  "temperature": 22.3
+  "sensor_id": 2,
+  "temp": 20.3
 }
 
 ###
 
+# получение информации по измерению
+GET http://localhost:8000/api/measure_check/
+Content-Type: application/json
+
+###
+
 # получение информации по датчику
-GET {{baseUrl}}/sensors/1/
+GET http://localhost:8000/api/sensor_data/3/
 Content-Type: application/json
