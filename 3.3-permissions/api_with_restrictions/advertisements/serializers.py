@@ -42,6 +42,6 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         open_count = Advertisement.objects.filter(creator_id=request.user.id, status='OPEN')
         if len(open_count) >= 10 and request.method == 'POST':
             raise serializers.ValidationError('Max 10 ads')
-        # elif len(open_count) >= 10 and request.method == 'PATCH':
-        #     raise serializers.ValidationError('Max 10 ads')
+        elif len(open_count) >= 10 and request.method == 'PATCH' and request.data.get('status') == 'OPEN':
+            raise serializers.ValidationError('Max 10 ads')
         return data
