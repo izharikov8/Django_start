@@ -50,7 +50,7 @@ def test_courses_list(api_client, course_factory, url):
 @pytest.mark.django_db
 def test_courses_id_filter(api_client, course_factory, url):
     courses = course_factory(_quantity=10)
-    response = api_client.get(url)
+    response = api_client.get(url, params={'id': courses[0].id})
     data = response.json()
 
     assert response.status_code == 200
@@ -60,7 +60,7 @@ def test_courses_id_filter(api_client, course_factory, url):
 @pytest.mark.django_db
 def test_courses_name_filter(api_client, course_factory, url):
     courses = course_factory(_quantity=10)
-    response = api_client.get(url)
+    response = api_client.get(url, params={'name': courses[0].name})
     data = response.json()
 
     assert response.status_code == 200
